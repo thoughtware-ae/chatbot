@@ -1,0 +1,4 @@
+streamlit
+pydantic-ai[anthropic]
+python-dotenv
+nest-asyncio
