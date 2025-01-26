@@ -12,21 +12,39 @@ nest_asyncio.apply()
 # Load environment variables
 load_dotenv()
 
-# Define system prompt
-SYSTEM_PROMPT = "You are a helpful AI assistant. Provide clear, accurate and engaging responses."
+# Initialize session state for system prompt if it doesn't exist
+if "system_prompt" not in st.session_state:
+    st.session_state.system_prompt = "You are a helpful AI assistant. Provide clear, accurate and engaging responses."
 
-# Initialize the agent with Claude
-agent = Agent(
-    'claude-3-5-sonnet-latest',
-    system_prompt=SYSTEM_PROMPT
-)
+# Initialize session state for agent if it doesn't exist
+if "agent" not in st.session_state:
+    st.session_state.agent = Agent(
+        'claude-3-5-sonnet-latest',
+        system_prompt=st.session_state.system_prompt
+    )
 
 # Set up the Streamlit interface
 st.title("AI Chatbot")
 
-# Display system prompt in an expander
-with st.expander("System Prompt", expanded=True):
-    st.code(SYSTEM_PROMPT, language="text")
+# Add system prompt editor
+with st.expander("System Prompt Editor", expanded=True):
+    new_system_prompt = st.text_area(
+        "Edit System Prompt",
+        value=st.session_state.system_prompt,
+        height=100
+    )
+
+    if st.button("Update System Prompt"):
+        st.session_state.system_prompt = new_system_prompt
+        # Reinitialize the agent with new system prompt
+        st.session_state.agent = Agent(
+            'claude-3-5-sonnet-latest',
+            system_prompt=new_system_prompt
+        )
+        st.success("System prompt updated successfully!")
+
+    # Display current system prompt
+    st.code(st.session_state.system_prompt, language="text")
 
 # Add a visual separator
 st.markdown("---")
@@ -57,7 +75,7 @@ if prompt := st.chat_input():
             asyncio.set_event_loop(loop)
 
             # Get response from the agent using the event loop
-            result = loop.run_until_complete(agent.run(
+            result = loop.run_until_complete(st.session_state.agent.run(
                 prompt,
                 message_history=model_messages
             ))
@@ -68,3 +86,8 @@ if prompt := st.chat_input():
 
         except Exception as e:
             st.error(f"An error occurred: {str(e)}")
+
+# Add option to clear chat history
+if st.sidebar.button("Clear Chat History"):
+    st.session_state.messages = []
+    st.experimental_rerun()
