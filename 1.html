@@ -1,0 +1,244 @@
+<article class="md-content__inner md-typeset">
+                
+  <div id="version-warning"><div class="admonition info" style="margin: 0">
+  <p class="admonition-title">Version Notice</p>
+  <p>
+    
+    This documentation is ahead of the last release by
+    <a href="https://github.com/pydantic/pydantic-ai/compare/v0.0.19...main">3 commits</a>.
+    You may see documentation for features not yet supported in the latest release <a href="https://github.com/pydantic/pydantic-ai/releases/tag/v0.0.19">v0.0.19 2025-01-15</a>.
+  </p>
+</div></div>
+  <script>
+    fetch('/version-warning.html?v=1737364349').then(r => {
+      if (r.ok) {
+        r.text().then(text => { document.getElementById('version-warning').innerHTML = text })
+    } else {
+        r.text().then(text => { console.error('failed to fetch ahead-warning.html:', {r, text})})
+      }
+    })
+  </script>
+  
+                  
+
+
+  
+  
+
+
+<h1 class="hide" id="introduction">Introduction</h1>
+<div class="text-center">
+  <img class="index-header off-glb" src="./img/pydantic-ai-dark.svg#only-dark" alt="PydanticAI">
+</div>
+<div class="text-center">
+  <img class="index-header off-glb" src="./img/pydantic-ai-light.svg#only-light" alt="PydanticAI">
+</div>
+<p class="text-center">
+  <em>Agent Framework / shim to use Pydantic with LLMs</em>
+</p>
+<p class="text-center">
+  <a href="https://github.com/pydantic/pydantic-ai/actions/workflows/ci.yml?query=branch%3Amain">
+    <img src="https://github.com/pydantic/pydantic-ai/actions/workflows/ci.yml/badge.svg?event=push" alt="CI">
+  </a>
+  <a href="https://coverage-badge.samuelcolvin.workers.dev/redirect/pydantic/pydantic-ai">
+    <img src="https://coverage-badge.samuelcolvin.workers.dev/pydantic/pydantic-ai.svg" alt="Coverage">
+  </a>
+  <a href="https://pypi.python.org/pypi/pydantic-ai">
+    <img src="https://img.shields.io/pypi/v/pydantic-ai.svg" alt="PyPI">
+  </a>
+  <a href="https://github.com/pydantic/pydantic-ai">
+    <img src="https://img.shields.io/pypi/pyversions/pydantic-ai.svg" alt="versions">
+  </a>
+  <a href="https://github.com/pydantic/pydantic-ai/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/pydantic/pydantic-ai.svg" alt="license">
+  </a>
+</p>
+
+<p class="text-emphasis">
+  PydanticAI is a Python agent framework designed to make it less painful to
+  build production grade applications with Generative AI.
+</p>
+
+<p>PydanticAI is a Python Agent Framework designed to make it less painful to
+build production grade applications with Generative AI.</p>
+<p>FastAPI revolutionized web development by offering an innovative and ergonomic design, built on the foundation of <a href="https://docs.pydantic.dev">Pydantic</a>.</p>
+<p>Similarly, virtually every agent framework and LLM library in Python uses Pydantic, yet when we began to use LLMs in <a href="https://pydantic.dev/logfire">Pydantic Logfire</a>, we couldn't find anything that gave us the same feeling.</p>
+<p>We built PydanticAI with one simple aim: to bring that FastAPI feeling to GenAI app development.</p>
+<h2 id="why-use-pydanticai">Why use PydanticAI</h2>
+<p><span class="twemoji md middle team-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.536 5.536 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13v-1.75M0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20H0m24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9V20Z"></path></svg></span>&nbsp;<strong class="vertical-middle">Built by the Pydantic Team</strong><br>
+Built by the team behind <a href="https://docs.pydantic.dev/latest/">Pydantic</a> (the validation layer of the OpenAI SDK, the Anthropic SDK, LangChain, LlamaIndex, AutoGPT, Transformers, CrewAI, Instructor and many more).</p>
+<p><span class="twemoji md middle shapes-orange"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M315.4 15.5C309.7 5.9 299.2 0 288 0s-21.7 5.9-27.4 15.5l-96 160c-5.9 9.9-6.1 22.2-.4 32.2s16.3 16.2 27.8 16.2h192c11.5 0 22.2-6.2 27.8-16.2s5.5-22.3-.4-32.2l-96-160zM288 312v144c0 22.1 17.9 40 40 40h144c22.1 0 40-17.9 40-40V312c0-22.1-17.9-40-40-40H328c-22.1 0-40 17.9-40 40zM128 512a128 128 0 1 0 0-256 128 128 0 1 0 0 256z"></path></svg></span>&nbsp;<strong class="vertical-middle">Model-agnostic</strong><br>
+Supports OpenAI, Anthropic, Gemini, Ollama, Groq, and Mistral, and there is a simple interface to implement support for <a data-preview="" href="models/">other models</a>.</p>
+<p><span class="twemoji md middle"><svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="90" height="90" fill="#E520E9"></rect>
+<path d="M48.75 60V48.75H37.5V18.75H26.25V60H37.5V71.25H63.75V60H48.75Z" fill="#092224"></path>
+</svg>
+</span>&nbsp;<strong class="vertical-middle">Pydantic Logfire Integration</strong><br>
+Seamlessly <a data-preview="" href="logfire/">integrates</a> with <a href="https://pydantic.dev/logfire">Pydantic Logfire</a> for real-time debugging, performance monitoring, and behavior tracking of your LLM-powered applications.</p>
+<p><span class="twemoji md middle secure-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4Z"></path></svg></span>&nbsp;<strong class="vertical-middle">Type-safe</strong><br>
+Designed to make <a data-preview="" href="agents/#static-type-checking">type checking</a> as powerful and informative as possible for you.</p>
+<p><img alt="🐍" class="twemoji md middle" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f40d.svg" title=":snake:">&nbsp;<strong class="vertical-middle">Python-centric Design</strong><br>
+Leverages Python's familiar control flow and agent composition to build your AI-driven projects, making it easy to apply standard Python best practices you'd use in any other (non-AI) project.</p>
+<p><span class="twemoji md middle pydantic-pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m23.826 17.316-4.23-5.866-6.847-9.496c-.348-.48-1.151-.48-1.497 0l-6.845 9.494-4.233 5.868a.925.925 0 0 0 .46 1.417l11.078 3.626h.002a.92.92 0 0 0 .572 0h.002l11.077-3.626c.28-.092.5-.31.59-.592a.916.916 0 0 0-.13-.825h.002ZM12.001 4.07l4.44 6.158-4.152-1.36c-.032-.01-.066-.008-.098-.016a.8.8 0 0 0-.096-.016c-.032-.004-.062-.016-.094-.016s-.062.012-.094.016a.74.74 0 0 0-.096.016c-.032.006-.066.006-.096.016L7.59 10.221l-.026.008 4.44-6.158h-.002Zm-6.273 8.7 4.834-1.583.516-.168v9.19L2.41 17.372l3.317-4.6Zm7.197 7.437V11.02l5.35 1.752 3.316 4.598-8.666 2.838Z"></path></svg></span>&nbsp;<strong class="vertical-middle">Structured Responses</strong><br>
+Harnesses the power of <a href="https://docs.pydantic.dev/latest/">Pydantic</a> to <a data-preview="" href="results/#structured-result-validation">validate and structure</a> model outputs, ensuring responses are consistent across runs.</p>
+<p><span class="twemoji md middle puzzle-purple"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.04 19.61a2.682 2.682 0 0 0-2.54-1.81c-1.5 0-2.7 1.2-2.7 2.7V22H4a2 2 0 0 1-2-2v-3.8h1.5c1.5 0 2.7-1.2 2.7-2.7S5 10.8 3.5 10.8H2V7c0-1.1.9-2 2-2h4V3.5a2.5 2.5 0 0 1 5 0V5h4a2 2 0 0 1 2 2v4h1.5a2.5 2.5 0 0 1 2.5 2.5c0 .32-.06.62-.17.89A5.991 5.991 0 0 0 19 13c-3.31 0-6 2.69-6 6 0 .2 0 .41.04.61M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3h-2Z"></path></svg></span>&nbsp;<strong class="vertical-middle">Dependency Injection System</strong><br>
+Offers an optional <a data-preview="" href="dependencies/">dependency injection</a> system to provide data and services to your agent's <a data-preview="" href="agents/#system-prompts">system prompts</a>, <a data-preview="" href="tools/">tools</a> and <a data-preview="" href="results/#result-validators-functions">result validators</a>.
+This is useful for testing and eval-driven iterative development.</p>
+<p><span class="twemoji md middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.5 21c-3 0-4.19-4.24-5.45-8.72C10.14 9.04 9 5 7.5 5 4.11 5 4 11.93 4 12H2c0-.37.06-9 5.5-9 3 0 4.21 4.25 5.47 8.74C13.83 14.8 15 19 16.5 19c3.44 0 3.53-6.93 3.53-7h2c0 .37-.06 9-5.53 9Z"></path></svg></span>&nbsp;<strong class="vertical-middle">Streamed Responses</strong><br>
+Provides the ability to <a data-preview="" href="results/#streamed-results">stream</a> LLM outputs continuously, with immediate validation, ensuring rapid and accurate results.</p>
+<p><span class="twemoji md middle graph-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.5 17c-.13 0-.26 0-.39.04l-1.61-3.25a2.5 2.5 0 0 0-1.75-4.29c-.13 0-.25 0-.39.04l-1.63-3.25c.48-.45.77-1.08.77-1.79a2.5 2.5 0 0 0-5 0c0 .71.29 1.34.76 1.79L8.64 9.54c-.14-.04-.26-.04-.39-.04a2.5 2.5 0 0 0-1.75 4.29l-1.61 3.25C4.76 17 4.63 17 4.5 17a2.5 2.5 0 0 0 0 5A2.5 2.5 0 0 0 7 19.5c0-.7-.29-1.34-.76-1.79l1.62-3.25c.14.04.26.04.39.04s.25 0 .39-.04l1.63 3.25c-.47.45-.77 1.09-.77 1.79a2.5 2.5 0 0 0 5 0A2.5 2.5 0 0 0 12 17c-.13 0-.26 0-.39.04L10 13.79c.46-.45.75-1.08.75-1.79s-.29-1.34-.75-1.79l1.61-3.25c.13.04.26.04.39.04s.26 0 .39-.04L14 10.21c-.45.45-.75 1.09-.75 1.79a2.5 2.5 0 0 0 2.5 2.5c.13 0 .25 0 .39-.04l1.63 3.25c-.47.45-.77 1.09-.77 1.79a2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0-2.5-2.5Z"></path></svg></span>&nbsp;<strong class="vertical-middle">Graph Support</strong><br>
+<a data-preview="" href="graph/">Pydantic Graph</a> provides a powerful way to define graphs using typing hints, this is useful in complex applications where standard control flow can degrade to spaghetti code.</p>
+<div class="admonition example">
+<p class="admonition-title">In Beta</p>
+<p>PydanticAI is in early beta, the API is still subject to change and there's a lot more to do.
+<a href="https://github.com/pydantic/pydantic-ai/issues">Feedback</a> is very welcome!</p>
+</div>
+<h2 id="hello-world-example">Hello World Example</h2>
+<p>Here's a minimal example of PydanticAI:</p>
+<div class="language-python highlight"><span class="filename">hello_world.py</span><pre id="__code_0"><span></span><nav class="md-code__nav"><button class="md-code__button" title="Copy to clipboard" data-clipboard-target="#__code_0 > code" data-md-type="copy"></button></nav><code><span class="kn">from</span> <span class="nn">pydantic_ai</span> <span class="kn">import</span> <span class="n">Agent</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 159px; --md-tooltip-y: 59px; --md-tooltip-0: -16px;"><a href="#__code_0_annotation_1" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="1"></span></a></aside></span>
+    <span class="s1">'gemini-1.5-flash'</span><span class="p">,</span>
+    <span class="n">system_prompt</span><span class="o">=</span><span class="s1">'Be concise, reply with one sentence.'</span><span class="p">,</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 510px; --md-tooltip-y: 97px; --md-tooltip-0: -16px;"><a href="#__code_0_annotation_2" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="2"></span></a></aside></span>
+<span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">run_sync</span><span class="p">(</span><span class="s1">'Where does "hello world" come from?'</span><span class="p">)</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 550px; --md-tooltip-y: 154px; --md-tooltip-0: -16px;"><a href="#__code_0_annotation_3" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="3"></span></a></aside></span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="sd">"""</span>
+<span class="sd">The first known use of "hello, world" was in a 1974 textbook about the C programming language.</span>
+<span class="sd">"""</span>
+</code></pre></div>
+<ol hidden="">
+<li></li>
+<li></li>
+<li></li>
+</ol>
+<p><em>(This example is complete, it can be run "as is")</em></p>
+<p>The exchange should be very short: PydanticAI will send the system prompt and the user query to the LLM, the model will return a text response.</p>
+<p>Not very interesting yet, but we can easily add "tools", dynamic system prompts, and structured responses to build more powerful agents.</p>
+<h2 id="tools-dependency-injection-example">Tools &amp; Dependency Injection Example</h2>
+<p>Here is a concise example using PydanticAI to build a support agent for a bank:</p>
+<div class="language-python highlight"><span class="filename">bank_support.py</span><pre id="__code_1"><span></span><nav class="md-code__nav"><button class="md-code__button" title="Copy to clipboard" data-clipboard-target="#__code_1 > code" data-md-type="copy"></button></nav><code tabindex="0"><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+<span class="kn">from</span> <span class="nn">pydantic_ai</span> <span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">RunContext</span>
+
+<span class="kn">from</span> <span class="nn">bank_database</span> <span class="kn">import</span> <span class="n">DatabaseConn</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">SupportDependencies</span><span class="p">:</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 257px; --md-tooltip-y: 192px; --md-tooltip-0: -16px;"><a href="#__code_1_annotation_3" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="3"></span></a></aside></span>
+    <span class="n">customer_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">db</span><span class="p">:</span> <span class="n">DatabaseConn</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 208px; --md-tooltip-y: 230px; --md-tooltip-0: -16px;"><a href="#__code_1_annotation_12" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="12"></span></a></aside></span>
+
+
+<span class="k">class</span> <span class="nc">SupportResult</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 297px; --md-tooltip-y: 287px; --md-tooltip-0: -16px;"><a href="#__code_1_annotation_13" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="13"></span></a></aside></span>
+    <span class="n">support_advice</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">'Advice returned to the customer'</span><span class="p">)</span>
+    <span class="n">block_card</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Whether to block the customer's card"</span><span class="p">)</span>
+    <span class="n">risk</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">'Risk level of query'</span><span class="p">,</span> <span class="n">ge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">le</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="n">support_agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 224px; --md-tooltip-y: 401px; --md-tooltip-0: -16px;"><a href="#__code_1_annotation_1" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="1"></span></a></aside></span>
+    <span class="s1">'openai:gpt-4o'</span><span class="p">,</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 208px; --md-tooltip-y: 420px; --md-tooltip-0: -16px;"><a href="#__code_1_annotation_2" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="2"></span></a></aside></span>
+    <span class="n">deps_type</span><span class="o">=</span><span class="n">SupportDependencies</span><span class="p">,</span>
+    <span class="n">result_type</span><span class="o">=</span><span class="n">SupportResult</span><span class="p">,</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 289px; --md-tooltip-y: 458px; --md-tooltip-0: -16px;"><a href="#__code_1_annotation_9" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="9"></span></a></aside></span>
+    <span class="n">system_prompt</span><span class="o">=</span><span class="p">(</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 199px; --md-tooltip-y: 477px; --md-tooltip-0: -16px;"><a href="#__code_1_annotation_4" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="4"></span></a></aside></span>
+        <span class="s1">'You are a support agent in our bank, give the '</span>
+        <span class="s1">'customer support and judge the risk level of their query.'</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+
+
+<span class="nd">@support_agent</span><span class="o">.</span><span class="n">system_prompt</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 273px; --md-tooltip-y: 611px; --md-tooltip-0: -16px;"><a href="#__code_1_annotation_5" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="5"></span></a></aside></span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">add_customer_name</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">RunContext</span><span class="p">[</span><span class="n">SupportDependencies</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">customer_name</span> <span class="o">=</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">deps</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">customer_name</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">deps</span><span class="o">.</span><span class="n">customer_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"The customer's name is </span><span class="si">{</span><span class="n">customer_name</span><span class="si">!r}</span><span class="s2">"</span>
+
+
+<span class="nd">@support_agent</span><span class="o">.</span><span class="n">tool</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 199px; --md-tooltip-y: 725px; --md-tooltip-0: -16px;"><a href="#__code_1_annotation_6" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="6"></span></a></aside></span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">customer_balance</span><span class="p">(</span>
+    <span class="n">ctx</span><span class="p">:</span> <span class="n">RunContext</span><span class="p">[</span><span class="n">SupportDependencies</span><span class="p">],</span> <span class="n">include_pending</span><span class="p">:</span> <span class="nb">bool</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Returns the customer's current account balance."""</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 510px; --md-tooltip-y: 801px; --md-tooltip-0: -16px;"><a href="#__code_1_annotation_7" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="7"></span></a></aside></span>
+    <span class="k">return</span> <span class="k">await</span> <span class="n">ctx</span><span class="o">.</span><span class="n">deps</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">customer_balance</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">deps</span><span class="o">.</span><span class="n">customer_id</span><span class="p">,</span>
+        <span class="n">include_pending</span><span class="o">=</span><span class="n">include_pending</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="o">...</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 69px; --md-tooltip-y: 934px; --md-tooltip-0: -16px;"><a href="#__code_1_annotation_11" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="11"></span></a></aside></span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">deps</span> <span class="o">=</span> <span class="n">SupportDependencies</span><span class="p">(</span><span class="n">customer_id</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="n">DatabaseConn</span><span class="p">())</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">support_agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">'What is my balance?'</span><span class="p">,</span> <span class="n">deps</span><span class="o">=</span><span class="n">deps</span><span class="p">)</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 616px; --md-tooltip-y: 1030px; --md-tooltip-0: -16px;"><a href="#__code_1_annotation_8" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="8"></span></a></aside></span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 224px; --md-tooltip-y: 1049px; --md-tooltip-0: -16px;"><a href="#__code_1_annotation_10" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="10"></span></a></aside></span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    support_advice='Hello John, your current account balance, including pending transactions, is $123.45.' block_card=False risk=1</span>
+<span class="sd">    """</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">support_agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">'I just lost my card!'</span><span class="p">,</span> <span class="n">deps</span><span class="o">=</span><span class="n">deps</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    support_advice="I'm sorry to hear that, John. We are temporarily blocking your card to prevent unauthorized transactions." block_card=True risk=8</span>
+<span class="sd">    """</span>
+</code></pre></div>
+<ol hidden="">
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Complete <code>bank_support.py</code> example</p>
+<p>The code included here is incomplete for the sake of brevity (the definition of <code>DatabaseConn</code> is missing); you can find the complete <code>bank_support.py</code> example <a data-preview="" href="examples/bank-support/">here</a>.</p>
+</div>
+<h2 id="instrumentation-with-pydantic-logfire">Instrumentation with Pydantic Logfire</h2>
+<p>To understand the flow of the above runs, we can watch the agent in action using Pydantic Logfire.</p>
+<p>To do this, we need to set up logfire, and add the following to our code:</p>
+<div class="language-python highlight"><span class="filename">bank_support_with_logfire.py</span><pre id="__code_2"><span></span><nav class="md-code__nav"><button class="md-code__button" title="Copy to clipboard" data-clipboard-target="#__code_2 > code" data-md-type="copy"></button></nav><code><span class="o">...</span>
+<span class="kn">from</span> <span class="nn">bank_database</span> <span class="kn">import</span> <span class="n">DatabaseConn</span>
+
+<span class="hll"><span class="kn">import</span> <span class="nn">logfire</span>
+</span><span class="hll"><span class="n">logfire</span><span class="o">.</span><span class="n">configure</span><span class="p">()</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 199px; --md-tooltip-y: 97px; --md-tooltip-0: -16px;"><a href="#__code_2_annotation_1" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="1"></span></a></aside></span>
+</span><span class="hll"><span class="n">logfire</span><span class="o">.</span><span class="n">instrument_asyncpg</span><span class="p">()</span>  <span class="c1"><aside class="md-annotation" tabindex="0" style="--md-tooltip-x: 273px; --md-tooltip-y: 116px; --md-tooltip-0: -16px;"><a href="#__code_2_annotation_2" class="md-annotation__index" tabindex="-1"><span data-md-annotation-id="2"></span></a></aside></span>
+</span><span class="o">...</span>
+</code></pre></div>
+<ol hidden="">
+<li></li>
+<li></li>
+</ol>
+<p>That's enough to get the following view of your agent in action:</p>
+<div style="position: relative; padding-top: 55%;">
+  <iframe src="https://customer-nmegqx24430okhaq.cloudflarestream.com/9078b98c4f75d01f912a0368bbbdb97a/iframe?poster=https%3A%2F%2Fcustomer-nmegqx24430okhaq.cloudflarestream.com%2F9078b98c4f75d01f912a0368bbbdb97a%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D25s%26height%3D600" loading="lazy" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe>
+</div>
+
+<p>See <a data-preview="" href="logfire/">Monitoring and Performance</a> to learn more.</p>
+<h2 id="next-steps">Next Steps</h2>
+<p>To try PydanticAI yourself, follow the instructions <a data-preview="" href="examples/">in the examples</a>.</p>
+<p>Read the <a data-preview="" href="agents/">docs</a> to learn more about building applications with PydanticAI.</p>
+<p>Read the <a data-preview="" href="api/agent/">API Reference</a> to understand PydanticAI's interface.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+              </article>
