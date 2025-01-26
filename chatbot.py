@@ -6,10 +6,7 @@ from dotenv import load_dotenv
 import asyncio
 import nest_asyncio
 
-# Apply nest_asyncio to allow nested event loops
 nest_asyncio.apply()
-
-# Load environment variables
 load_dotenv()
 
 # Initialize session state for system prompt if it doesn't exist
@@ -23,6 +20,10 @@ if "agent" not in st.session_state:
         system_prompt=st.session_state.system_prompt
     )
 
+# Initialize session state for message history if it doesn't exist
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
 # Set up the Streamlit interface
 st.title("AI Chatbot")
 
@@ -33,7 +34,6 @@ with st.expander("System Prompt Editor", expanded=True):
         value=st.session_state.system_prompt,
         height=100
     )
-
     if st.button("Update System Prompt"):
         st.session_state.system_prompt = new_system_prompt
         # Reinitialize the agent with new system prompt
@@ -41,17 +41,13 @@ with st.expander("System Prompt Editor", expanded=True):
             'claude-3-5-sonnet-latest',
             system_prompt=new_system_prompt
         )
-        st.success("System prompt updated successfully!")
+        # Clear message history when system prompt changes
+        st.session_state.messages = []
+        st.success("System prompt updated and chat history cleared!")
 
-    # Display current system prompt
     st.code(st.session_state.system_prompt, language="text")
 
-# Add a visual separator
 st.markdown("---")
-
-# Initialize session state for message history if it doesn't exist
-if "messages" not in st.session_state:
-    st.session_state.messages = []
 
 # Display chat messages
 for message in st.session_state.messages:
@@ -62,30 +58,35 @@ for message in st.session_state.messages:
 
 # Get user input
 if prompt := st.chat_input():
-    # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
 
-    # Convert chat history to PydanticAI format
-    model_messages: list[ModelMessage] = []
-    if st.session_state.messages:
-        try:
-            # Create a new event loop
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
+    try:
+        # Convert chat history to ModelMessage format
+        model_messages = []
+        for msg in st.session_state.messages[:-1]:  # Exclude the current prompt
+            if msg["role"] == "user":
+                # Add user messages to history
+                model_messages.extend(st.session_state.agent.run_sync(
+                    msg["content"]
+                ).new_messages())
 
-            # Get response from the agent using the event loop
-            result = loop.run_until_complete(st.session_state.agent.run(
-                prompt,
-                message_history=model_messages
-            ))
+        # Create a new event loop
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
 
-            # Add assistant message to chat history
-            st.session_state.messages.append({"role": "assistant", "content": result.data})
-            st.chat_message("assistant").write(result.data)
+        # Get response from the agent using the event loop
+        result = loop.run_until_complete(st.session_state.agent.run(
+            prompt,
+            message_history=model_messages
+        ))
 
-        except Exception as e:
-            st.error(f"An error occurred: {str(e)}")
+        # Add assistant message to chat history
+        st.session_state.messages.append({"role": "assistant", "content": result.data})
+        st.chat_message("assistant").write(result.data)
+
+    except Exception as e:
+        st.error(f"An error occurred: {str(e)}")
 
 # Add option to clear chat history
 if st.sidebar.button("Clear Chat History"):
